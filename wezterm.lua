@@ -3,13 +3,9 @@ local wezterm = require("wezterm")
 -- config builder
 local config = wezterm.config_builder()
 
--- config.color_scheme = "Tokyo Night"
--- config.font = wezterm.font_with_fallback({
---   {family = "JetBrainsMonoNerdFont", scale = 0.9}
--- })
-
 config.font = wezterm.font("JetBrainsMonoNerdFont")
-config.font_size = 10.5
+config.font_size = 15.0
+config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
 
 config.enable_tab_bar = false
 config.window_decorations = "RESIZE"
@@ -38,75 +34,56 @@ local act = wezterm.action
 
 config.keys = {
   {
-    key = 'n',
-    mods = 'ALT',
-    action = act.Multiple {
-      act.ActivateKeyTable {
-        name = 'disabled',
-        one_shot = false
-      },
-      -- act.SendString:q
-
-    }
+    key = "=",
+    mods = "SUPER",
+    action = "IncreaseFontSize"
   },
   {
-    key = 'P',
-    mods = 'CTRL',
+    key = "-",
+    mods = "SUPER",
+    action = "DecreaseFontSize"
+  },
+  {
+    key = "0",
+    mods = "SUPER",
+    action = "ResetFontSize"
+  },
+  {
+    key = ';',
+    mods = 'SUPER',
     action = "ActivateCommandPalette"
   },
   {
-    key = 'Space',
-    mods = 'CTRL',
+    key = 'k',
+    mods = 'SUPER',
     action = 'ActivateCopyMode'
   },
   {
-    key = "v",
-    mods = "CTRL",
-    action = act.PasteFrom 'Clipboard'
+    key = "j",
+    mods = "SUPER",
+    action = 'SpawnWindow'
   },
   {
-    key = "Enter",
-    mods = "ALT",
-    action = 'SpawnWindow'
-  }
-
-
+    key = "c",
+    mods = "SUPER",
+    action = act.CopyTo 'Clipboard'
+  },
+  -- {
+  --   key = "LeftArrow",
+  --   mods = "SUPER",
+  --   action = act.Multiple {
+  --     "ActivateCopyMode",
+  --     act.CopyMode { SetSelectionMode = 'Cell' },
+  --     act.CopyMode "MoveLeft",
+  --     "PopKeyTable"
+  --   }
+  -- },
 }
 
 
--- local act = wezterm.action
-local copy_mode2 = {
-  {
-    key = 'w',
-    mods = None,
-    action = act.CopyMode 'MoveForwardWordEnd'
-  },
-  {
-    key = 'b',
-    mods = None,
-    action = act.CopyMode 'MoveBackwardWord'
-  },
-  {
-    key = "j",
-    mods = None,
-    action = act.CopyMode "MoveUp"
-  },
 
-  {
-    key = "k",
-    mods = None,
-    action = act.CopyMode "MoveLeft"
-  },
-  {
-    key = "l",
-    mods = None,
-    action = act.CopyMode "MoveRight"
-  },
-  {
-    key = ";",
-    mods = None,
-    action = act.CopyMode "MoveDown"
-  },
+-- local act = wezterm.action
+local copy_mode = {
   {
     key = 'v',
     mods = None,
@@ -122,20 +99,104 @@ local copy_mode2 = {
     mods = "CTRL",
     action = act.CopyMode { SetSelectionMode = 'Block' }
   },
+
+
+
   {
-    key = 'Escape',
+    key = 'w',
     mods = None,
-    action = act.CopyMode 'ClearSelectionMode'
+    action = act.CopyMode 'MoveForwardWord'
   },
   {
-    key = 'Escape',
-    mods = 'CTRL',
-    action = act.Multiple { act.ClearSelection, act.CopyMode 'Close' }
+    key = 'e',
+    mods = None,
+    action = act.CopyMode 'MoveForwardWordEnd'
+  },
+  {
+    key = 'b',
+    mods = None,
+    action = act.CopyMode 'MoveBackwardWord'
+  },
+
+
+
+  {
+    key = "j",
+    mods = None,
+    action = act.CopyMode "MoveUp"
+  },
+  {
+    key = "k",
+    mods = None,
+    action = act.CopyMode "MoveLeft"
+  },
+  {
+    key = "l",
+    mods = None,
+    action = act.CopyMode "MoveRight"
+  },
+  {
+    key = ";",
+    mods = None,
+    action = act.CopyMode "MoveDown"
+  },
+
+
+  {
+    key = "Comma",
+    mods = "SHIFT",
+    action = act.Multiple{ act.CopyMode "MoveUp", act.CopyMode "MoveUp", act.CopyMode "MoveUp", act.CopyMode "MoveUp", act.CopyMode "MoveUp"  }
+  },
+  {
+    key = "Period",
+    mods = "SHIFT",
+    action = act.Multiple{ act.CopyMode "MoveDown", act.CopyMode "MoveDown", act.CopyMode "MoveDown", act.CopyMode "MoveDown", act.CopyMode "MoveDown"  }
+  },
+  {
+    key = "J",
+    mods = "SHIFT",
+    action = act.Multiple { act.CopyMode "MoveUp", act.CopyMode "MoveUp" }
+  },
+  {
+    key = ":",
+    mods = "SHIFT",
+    action = act.Multiple { act.CopyMode "MoveDown", act.CopyMode "MoveDown" }
+  },
+
+  {
+    key = '_',
+    mods = "SHIFT",
+    action = act.CopyMode 'MoveToStartOfLineContent'
+  },
+  {
+    key = 'Home',
+    mods = None,
+    action = act.CopyMode 'MoveToStartOfLine'
+  },
+  {
+    key = 'End',
+    mods = None,
+    action = act.CopyMode 'MoveToEndOfLineContent'
   },
 
 
   {
     key = 'c',
+    mods = None,
+    action = act.CopyMode 'ClearSelectionMode'
+  },
+  -- {
+  --   key = 'Escape',
+  --   mods = None,
+  --   action = act.CopyMode 'Close'
+  -- },
+  {
+    key = 'Escape',
+    mods = None,
+    action = act.Multiple { act.ClearSelection, act.CopyMode 'Close' }
+  },
+  {
+    key = 'y',
     mods = None,
     action = act.Multiple {
       act.CopyTo 'Clipboard',
@@ -148,32 +209,8 @@ local copy_mode2 = {
 
 
 config.key_tables = {
-  copy_mode = copy_mode2,
+  copy_mode = copy_mode,
   search_mode = {},
-  disabled = {
-    {
-      key = 'Escape',
-      mods = 'CTRL',
-      action = 'PopKeyTable'
-    },
-
-    {
-      key = 'p',
-      mods = 'CTRL',
-      action = 'Nop'
-    },
-    {
-      key = 'P',
-      mods = 'CTRL',
-      action = 'Nop'
-    },
-    {
-      key = 'P',
-      mods = 'CTRL|SHIFT',
-      action = 'Nop'
-    },
-  },
-
 }
 
 
