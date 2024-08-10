@@ -44,8 +44,8 @@ config.keys = {
     action = "ResetFontSize"
   },
   {
-    key = ';',
-    mods = 'SUPER',
+    key = ':',
+    mods = 'SHIFT|SUPER',
     action = "ActivateCommandPalette"
   },
   {
