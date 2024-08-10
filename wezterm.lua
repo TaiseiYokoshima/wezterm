@@ -27,7 +27,7 @@ config.window_background_image_hsb = {
 config.default_prog = {'/usr/bin/fish'}
 
 
--- config.disable_default_key_bindings = true
+config.disable_default_key_bindings = true
 
 
 local act = wezterm.action
