@@ -39,11 +39,6 @@ config.keys = {
     action = "IncreaseFontSize"
   },
   {
-    key = "-",
-    mods = "SUPER",
-    action = "DecreaseFontSize"
-  },
-  {
     key = "0",
     mods = "SUPER",
     action = "ResetFontSize"
@@ -54,19 +49,29 @@ config.keys = {
     action = "ActivateCommandPalette"
   },
   {
-    key = 'k',
+    key = "j",
+    mods = "SUPER",
+    action = act.CopyTo 'Clipboard'
+  },
+  {
+    key = "k",
+    mods = "SUPER",
+    action = act.PasteFrom "Clipboard"
+  },
+  {
+    key = 'l',
     mods = 'SUPER',
     action = 'ActivateCopyMode'
   },
   {
-    key = "j",
+    key = "-",
     mods = "SUPER",
-    action = 'SpawnWindow'
+    action = "DecreaseFontSize"
   },
   {
-    key = "c",
+    key = "n",
     mods = "SUPER",
-    action = act.CopyTo 'Clipboard'
+    action = 'SpawnWindow'
   },
   -- {
   --   key = "LeftArrow",
