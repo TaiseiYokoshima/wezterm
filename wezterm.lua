@@ -48,7 +48,7 @@ config.window_background_image_hsb = {
   saturation = 1.0,
 }
 
-config.default_prog = {'/usr/bin/fish'}
+config.default_prog = {'/usr/bin/env', "fish"}
 
 
 config.disable_default_key_bindings = true
